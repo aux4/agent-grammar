@@ -1,7 +1,7 @@
 {
   "scope": "agent",
   "name": "grammar",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An AI agent to fix grammar issues in text input.",
   "dependencies": [
     "aux4/ai-agent"
