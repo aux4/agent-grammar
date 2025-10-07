@@ -1,0 +1,61 @@
+{
+  "scope": "agent",
+  "name": "grammar",
+  "version": "0.0.1",
+  "description": "An AI agent to fix grammar issues in text input.",
+  "dependencies": [
+    "aux4/ai-agent"
+  ],
+  "profiles": [
+    {
+      "name": "main",
+      "commands": [
+        {
+          "name": "grammar",
+          "execute": [
+            "profile:grammar"
+          ],
+          "help": {
+            "text": "Language Grammar"
+          }
+        }
+      ]
+    },
+    {
+      "name": "grammar",
+      "commands": [
+        {
+          "name": "fix",
+          "variables": [
+            {
+              "name": "save",
+              "default": ""
+            }
+          ],
+          "execute": [
+            "nout:if(configFile==) && echo ${packageDir}/config.yaml || echo ${configFile}",
+            "set:grammarConfigFile=$response",
+            "stdin:aux4 ai agent ask --configFile ${grammarConfigFile} --context --config grammar --instructions ${packageDir}/instructions.md \"fix the input's grammar\"",
+            "set:output=$response",
+            "if(save!=) && TEXT=value(output) && echo \"$TEXT\" | bash -c 'cat > ${save}' || exit 0"
+          ],
+          "help": {
+            "text": "Fix Grammar",
+            "variables": [
+              {
+                "name": "configFile",
+                "text": "Path to the configuration file",
+                "default": ""
+              },
+              {
+                "name": "save",
+                "text": "File to save the corrected output",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

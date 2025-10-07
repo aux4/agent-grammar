@@ -1,0 +1,6 @@
+config:
+  grammar:
+    model:
+      type: openai
+      config:
+        model: gpt-5-mini
